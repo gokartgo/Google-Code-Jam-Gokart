@@ -10,7 +10,7 @@ let question = 0;
 let N = [], K = [], x1 = [], y1 = [], C = [], D = [], E1 = [], E2 = [], F = [];
 let POWER = []
 
-const answer = (N,K,x1,y1,C,D,E1,E2,F) => {
+const answer = (N,K,x1,y1,C,D,E1,E2,F,question) => {
     let A = [];
     A[0] = (x1+y1)%F;
     x = x1;
@@ -21,17 +21,21 @@ const answer = (N,K,x1,y1,C,D,E1,E2,F) => {
       y = (D * tempX + C * y + E2) % F
       A[i] = (x+y)%F
     }
+    let sum = 0
     for(let i=1;i<=K;i++) {
-      let sum = 0
       for(let j=0;j<N;j++) {
-        for(let k=0; k<N; k++) {
-          for(let l=0; l<=k; l++) {
-            A[l]
+        let check = []
+        let a = 0
+        for(let k=0; k<N-j; k++) {
+          for(let l=k; l<=k+j; l++) {
+            sum = ( sum + A[l] * Math.pow((l-k+1) ,i) ) % 1000000007
+            check[a++] = A[l]
           }
+          check[a++] = ' '
         }
       }
-      POWER[i]
     }
+    console.log(`Case #${question}: ${sum}`)
 }
 
 rl.on('line', (line) => {
@@ -56,7 +60,7 @@ rl.on('line', (line) => {
   }
 }).on('close',() => {
     for(let i=0;i<num_test_cases;i++) {
-        answer(N[i],K[i],x1[i],y1[i],C[i],D[i],E1[i],E2[i],F[i])
+        answer(N[i],K[i],x1[i],y1[i],C[i],D[i],E1[i],E2[i],F[i],i+1)
     }
     process.exit(0);
 });
