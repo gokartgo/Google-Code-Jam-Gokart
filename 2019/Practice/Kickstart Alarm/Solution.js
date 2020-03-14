@@ -8,7 +8,6 @@ let num_test_cases;
 let input_num = [];
 let question = 0;
 let N = [], K = [], x1 = [], y1 = [], C = [], D = [], E1 = [], E2 = [], F = [];
-let POWER = []
 
 const answer = (N,K,x1,y1,C,D,E1,E2,F,question) => {
     let A = [];
