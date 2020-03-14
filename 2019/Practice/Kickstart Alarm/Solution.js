@@ -8,6 +8,14 @@ let num_test_cases;
 let input_num = [];
 let question = 0;
 let N = [], K = [], x1 = [], y1 = [], C = [], D = [], E1 = [], E2 = [], F = [];
+let mod = 1000000007
+const power = (base,exponent) => {
+  let sum = base
+  for(let i=2;i<=exponent;i++) {
+    sum = (sum*base)%mod
+  }
+  return sum
+}
 
 const answer = (N,K,x1,y1,C,D,E1,E2,F,question) => {
     let A = [];
@@ -25,7 +33,9 @@ const answer = (N,K,x1,y1,C,D,E1,E2,F,question) => {
       for(let j=0;j<N;j++) {
         for(let k=0; k<N-j; k++) {
           for(let l=k; l<=k+j; l++) {
-            sum = ( sum + A[l] * Math.pow((l-k+1) ,i) ) % 1000000007
+            let powerNum = power((l-k+1),i)
+            sum += A[l] * powerNum
+            sum %= mod
           }
         }
       }
