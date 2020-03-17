@@ -13,20 +13,36 @@ let question = 0
 const answer = (N,P,student,question) => {
   const intStudent = student.map(s => parseInt(s)).sort((a,b) => b-a)
   let min = Infinity
+  // small
+  // for(let i=0;i<=intStudent.length - P;i++) {
+  //   let start = intStudent[i]
+  //   let countP = 0
+  //   let time = 0
+  //   for(let j=i;j<intStudent.length;j++) {
+  //     if(countP === P) {
+  //       break;
+  //     }
+  //     time += (start-intStudent[j])
+  //     countP++
+  //   }
+  //   if(min > time) {
+  //     min = time
+  //   }
+  // }
+
+  // big  = Σ(S[i] - S[j]) where j = i to i + P -1
+  //      = P × S[i] - Σ(S[j]) where j = i to i + P - 1
+  sumSj = 0
+  for(let i=0;i<P;i++) {
+    sumSj += intStudent[i]
+  }
   for(let i=0;i<=intStudent.length - P;i++) {
-    let start = intStudent[i]
-    let countP = 0
-    let time = 0
-    for(let j=i;j<intStudent.length;j++) {
-      if(countP === P) {
-        break;
-      }
-      time += (start-intStudent[j])
-      countP++
-    }
+    let time = intStudent[i]*P - sumSj
     if(min > time) {
       min = time
     }
+    sumSj -= intStudent[i]
+    sumSj += intStudent[i+P]
   }
   console.log(`Case #${question}: ${min}`)
 }
