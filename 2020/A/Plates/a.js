@@ -1,11 +1,19 @@
-function a(number) {
-    console.log(number)
-    if(number === 8 || number > 12) {
-        return 
+
+let test = []
+function a(number,start,sequence,word) {
+    for(let i=start;i<=number;i++) {
+        let temp = word
+        word += i
+        a(5,i+1,sequence+1,word)
+        if(word.length === sequence) {
+            console.log(word)
+            word = temp
+        }
+        if(i===1 && sequence ===1) {
+            console.log('break')
+            break
+        }
     }
-    a(number-1)
-    console.log(number)
-    a(number*2)
 }
 
-a(10)
+a(5,1,1,'')
