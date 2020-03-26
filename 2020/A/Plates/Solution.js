@@ -16,22 +16,22 @@ let index_input_plant = 0;
 let question = 0;
 let check = 0
 let debug = [0,0,0]
-const answer = (rows,columns,plants,input_plant,index_row,index_column,n,sequence) => {
+const answer = (rows,columns,plants,input_plant,index_row,index_column,n,sequence,word) => {
     // console.log('index',a)
     for(let i=index_row;i<rows;i++) {
         if(plants > 0) {
             // debug[index_column] = input_plant[i][index_column]
+            word+=i
             plants--
         } 
         if(plants === 0){
-            console.log('return',i,index_column)
+            console.log(word)
+            word = word.slice(0, -1)
             return
         }
         if(plants > 0) {
-            console.log('left',index_row,index_column)
-            answer(rows,columns+1,plants,input_plant,index_row,index_column+1,n,sequence+1)
-            console.log('right',i+1,0)
-            answer(rows,columns+1,plants,input_plant,i+1,0,n,sequence+1)
+            answer(rows,columns+1,plants,input_plant,index_row,index_column+1,n,sequence+1,word)
+            answer(rows,columns+1,plants,input_plant,i+1,0,n,sequence+1,word)
         }
         plants++
     }
@@ -65,14 +65,16 @@ rl.on('line', (line) => {
 }).on('close',() => {
     for(let i=0;i<num_test_cases;i++) {
         plants_fix = plants[i]
-        answer(parseInt(rows[i])
+        answer(
+        parseInt(rows[i])
         ,parseInt(columns[i])
         ,parseInt(plants[i])
         ,input_plant[i]
         ,0
         ,0
         ,i+1
-        ,1)
+        ,1
+        ,'')
     }
     process.exit(0);
 });
