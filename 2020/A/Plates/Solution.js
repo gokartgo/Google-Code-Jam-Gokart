@@ -17,21 +17,21 @@ let check = 0
 let max = 0
 const answer = (rows,columns,plants,input_plant,index_row,index_column,sum,sequence) => {
     for(let i=index_row;i<rows;i++) {
-        console.log('*',sequence,plants,index_row,index_column,input_plant[index_row][index_column])
+        // console.log('*',sequence,plants,index_row,index_column,input_plant[index_row][index_column])
         if(sequence === plants || index_column === columns || index_row === rows){
             sum = sum + parseInt(input_plant[index_row][index_column])
             if(sum > max) {
                 max = sum
             }
-            console.log('return',input_plant[index_row][index_column],sum)
+            // console.log('return',input_plant[index_row][index_column],sum)
             return
         }
         if(sequence < plants) {
             sum = sum + parseInt(input_plant[index_row][index_column])
-            if(index_column < columns - 1) {
+            if(index_column < columns - 1 && index_row === i) {
                 answer(rows,columns,plants,input_plant,index_row,index_column+1,sum,sequence+1)
             }
-            console.log('******',i,sequence,index_row,rows,`${sum} + ${input_plant[index_row][index_column]}`)
+            // console.log('******',i,sequence,index_row,rows,`${sum} + ${input_plant[index_row][index_column]}`)
             if(index_row < rows - 1) {
                 answer(rows,columns,plants,input_plant,i+1,0,sum,sequence+1)
             }
