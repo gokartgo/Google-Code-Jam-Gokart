@@ -11,29 +11,32 @@ let input_plant = [];
 let rows = []
 let columns = []
 let plants = []
-let plants_fix
 let index_input_plant = 0;
 let question = 0;
 let check = 0
-let debug = [0,0,0]
-const answer = (rows,columns,plants,input_plant,index_row,index_column,n,sequence,word) => {
-    // console.log('index',a)
+let max = 0
+const answer = (rows,columns,plants,input_plant,index_row,index_column,sum,sequence) => {
     for(let i=index_row;i<rows;i++) {
-        if(plants > 0) {
-            // debug[index_column] = input_plant[i][index_column]
-            word+=i
-            plants--
-        } 
-        if(plants === 0){
-            console.log(word)
-            word = word.slice(0, -1)
+        console.log('*',sequence,plants,index_row,index_column,input_plant[index_row][index_column])
+        if(sequence === plants || index_column === columns || index_row === rows){
+            sum = sum + parseInt(input_plant[index_row][index_column])
+            if(sum > max) {
+                max = sum
+            }
+            console.log('return',input_plant[index_row][index_column],sum)
             return
         }
-        if(plants > 0) {
-            answer(rows,columns+1,plants,input_plant,index_row,index_column+1,n,sequence+1,word)
-            answer(rows,columns+1,plants,input_plant,i+1,0,n,sequence+1,word)
+        if(sequence < plants) {
+            sum = sum + parseInt(input_plant[index_row][index_column])
+            if(index_column < columns - 1) {
+                answer(rows,columns,plants,input_plant,index_row,index_column+1,sum,sequence+1)
+            }
+            console.log('******',i,sequence,index_row,rows,`${sum} + ${input_plant[index_row][index_column]}`)
+            if(index_row < rows - 1) {
+                answer(rows,columns,plants,input_plant,i+1,0,sum,sequence+1)
+            }
+            sum = sum - parseInt(input_plant[index_row][index_column])
         }
-        plants++
     }
 }
 
@@ -64,17 +67,19 @@ rl.on('line', (line) => {
   }
 }).on('close',() => {
     for(let i=0;i<num_test_cases;i++) {
-        plants_fix = plants[i]
-        answer(
-        parseInt(rows[i])
-        ,parseInt(columns[i])
-        ,parseInt(plants[i])
-        ,input_plant[i]
-        ,0
-        ,0
-        ,i+1
-        ,1
-        ,'')
+        max = 0
+        for(let j=0;j<rows[i];j++) {
+            answer(
+                parseInt(rows[i])
+                ,parseInt(columns[i])
+                ,parseInt(plants[i])
+                ,input_plant[i]
+                ,j // index_row
+                ,0 // index_column
+                ,0 // sum
+                ,1)
+        }
+        console.log(`Case #${i+1}: ${max}`)
     }
     process.exit(0);
 });
