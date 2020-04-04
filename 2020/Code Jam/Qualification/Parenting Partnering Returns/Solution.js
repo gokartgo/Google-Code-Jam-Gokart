@@ -58,15 +58,20 @@ const answer = (input_time,n) => {
                     answer += 'C'
                     index_C++
                     C[j] = [-1,-1]
+                    input_time[i] = [null]
                     break
                 }
             }
             for(let j=0;j<J.length;j++) {
+                if(input_time[i] === null) {
+                    break
+                }
                 if(parseInt(input_time[i][0]) === J[j][0] &&
                 parseInt(input_time[i][1]) === J[j][1]) {
                     answer += 'J'
                     index_J++
                     J[j] = [-1,-1]
+                    input_time[i] = [-2,-2]
                     break
                 }
             }
