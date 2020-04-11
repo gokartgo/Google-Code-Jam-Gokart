@@ -12,28 +12,25 @@ let question = 0;
 let check = 0;
 
 const answer = (input_pattern,n) => {
-    for(let i = 0;i<input_pattern.length - 1;i++) {
-        let first,second,first_index,second_index;
-        if (input_num_pattern[i].length > input_num_pattern[i+1].length) {
-            first = input_num_pattern[i].length
-            first_index = i
-            second = input_num_pattern[i+1].length
-            second_index = i+1
-        } else {
-            first = input_num_pattern[i+1].length
-            first_index = i+1
-            second = input_num_pattern[i].length
-            second_index = i
-        }
-        let answer = ''
-        for(let k = first-1;k>=0;k--) {
-            if(input_num_pattern[first_index][k] == input_num_pattern[second][second_index]) {
-                second_index--
-            } else {
-                if(input_num_pattern[second_index][k])
+    let prefix = ''
+    let answer = ''
+    for(let i=0;i<input_pattern.length;i++) {
+        for(let j=input_pattern[i].length - 1;j>=0;j--) {
+            if(input_pattern[i][j] !== '*' && 
+            prefix[prefix.length - 1 - input_pattern[i].length + j + 1] !== input_pattern[i][j]) {
+                prefix = input_pattern[i][j] + prefix
             }
         }
     }
+    answer = prefix
+    for(let i=0;i<input_pattern.length;i++) {
+        for(let j=input_pattern[i].length - 1;j>=0;j--) {
+            if(input_pattern[i][j] !== '*' && prefix[prefix.length - 1 - input_pattern[i].length + j + 1] !== input_pattern[i][j]) {
+                answer = '*'
+            }
+        }
+    }
+    console.log(`Case #${n}: ${answer}`)
 }
 
 rl.on('line', (line) => {
