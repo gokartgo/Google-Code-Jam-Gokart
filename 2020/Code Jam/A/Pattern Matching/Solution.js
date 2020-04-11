@@ -7,7 +7,6 @@ let expect = 'begin';
 let num_test_cases;
 let input_pattern = [];
 let input_num_pattern = []
-let index_input_pattern = 0;
 let index_input_num_pattern = 0;
 let question = 0;
 let check = 0;
