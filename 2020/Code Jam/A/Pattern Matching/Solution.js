@@ -14,6 +14,7 @@ let check = 0;
 const answer = (input_pattern,n) => {
     let prefix = ''
     let suffix = ''
+    let body = ''
     let answer = ''
     for(let i=0;i<input_pattern.length;i++) {
         let set_prefix = true
@@ -36,8 +37,23 @@ const answer = (input_pattern,n) => {
                 }
             }
         }
+        let word = ''
+        let set_body = ''
+        let start = false
+        if(!set_prefix && !set_suffix) {
+            for(let j = 0;j<input_pattern[i].length;j++) {
+                if(start && input_pattern[i][j] !== '*') {
+                    word += input_pattern[i][j]
+                }
+                if(input_pattern[i][j] === '*') {
+                    start = true
+                    set_body = word
+                }
+            }
+        }
+        body += set_body
     }
-    answer = prefix + suffix
+    answer = prefix + body + suffix
     for(let i=0;i<input_pattern.length;i++) {
         for(let j=input_pattern[i].length - 1;j>=0;j--) {
             if(input_pattern[i][j] !== '*' && suffix[suffix.length - 1 - input_pattern[i].length + j + 1] !== input_pattern[i][j]) {
