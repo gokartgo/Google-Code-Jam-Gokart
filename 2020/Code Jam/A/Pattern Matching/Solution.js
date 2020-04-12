@@ -13,21 +13,50 @@ let check = 0;
 
 const answer = (input_pattern,n) => {
     let prefix = ''
+    let suffix = ''
     let answer = ''
     for(let i=0;i<input_pattern.length;i++) {
+        let set_prefix = true
+        let set_suffix = true
         for(let j=input_pattern[i].length - 1;j>=0;j--) {
-            if(input_pattern[i][j] !== '*' && 
-            prefix[prefix.length - 1 - input_pattern[i].length + j + 1] !== input_pattern[i][j]) {
-                prefix = input_pattern[i][j] + prefix
+            if(set_suffix && 
+            suffix[suffix.length - 1 - input_pattern[i].length + j + 1] !== input_pattern[i][j]) {
+                if(input_pattern[i][j] !== '*') {
+                    suffix = input_pattern[i][j] + suffix
+                } else {
+                    set_suffix = false
+                }
+            }
+            if(set_prefix &&
+                prefix[input_pattern[i].length - j - 1] !== input_pattern[i][input_pattern[i].length - j - 1]) {
+                if(input_pattern[i][input_pattern[i].length - j - 1] !== '*') {
+                    prefix = prefix + input_pattern[i][input_pattern[i].length - j - 1]
+                } else {
+                    set_prefix = false
+                }
             }
         }
     }
-    answer = prefix
+    answer = prefix + suffix
     for(let i=0;i<input_pattern.length;i++) {
         for(let j=input_pattern[i].length - 1;j>=0;j--) {
-            if(input_pattern[i][j] !== '*' && prefix[prefix.length - 1 - input_pattern[i].length + j + 1] !== input_pattern[i][j]) {
+            if(input_pattern[i][j] !== '*' && suffix[suffix.length - 1 - input_pattern[i].length + j + 1] !== input_pattern[i][j]) {
                 answer = '*'
             }
+            if(input_pattern[i][j] === '*') {
+                break
+            }
+        }
+        for(let j=0;j<input_pattern[i].length;j++) {
+            if(input_pattern[i][j] !== '*' && prefix[j] !== input_pattern[i][j]) {
+                answer = '*'
+            }
+            if(input_pattern[i][j] === '*') {
+                break
+            }
+        }
+        if(answer === '*') {
+            break
         }
     }
     console.log(`Case #${n}: ${answer}`)
