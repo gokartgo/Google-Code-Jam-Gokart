@@ -31,7 +31,6 @@ const answer = (move,index,repeat,n) => {
       move[i] = ''
     }
   }
-  word = word.repeat(repeat_local)
   let w = 1,h = 1
   for(let i=0;i<word.length;i++) {
     if(word[i] === 'S') {
