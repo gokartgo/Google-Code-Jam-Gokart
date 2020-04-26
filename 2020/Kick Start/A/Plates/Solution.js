@@ -17,6 +17,9 @@ let check = 0
 let max = 0
 const answer = (rows,columns,plants,input_plant,index_row,index_column,sum,sequence) => {
     for(let i=index_row;i<rows;i++) {
+        if(sequence === 1) {
+            console.log(i,sum)
+        }
         // console.log('*',sequence,plants,index_row,index_column,input_plant[index_row][index_column])
         if(sequence === plants || index_column === columns || index_row === rows){
             sum = sum + parseInt(input_plant[index_row][index_column])
@@ -68,17 +71,15 @@ rl.on('line', (line) => {
 }).on('close',() => {
     for(let i=0;i<num_test_cases;i++) {
         max = 0
-        for(let j=0;j<rows[i];j++) {
-            answer(
-                parseInt(rows[i])
-                ,parseInt(columns[i])
-                ,parseInt(plants[i])
-                ,input_plant[i]
-                ,j // index_row
-                ,0 // index_column
-                ,0 // sum
-                ,1)
-        }
+        answer(
+            parseInt(rows[i])
+            ,parseInt(columns[i])
+            ,parseInt(plants[i])
+            ,input_plant[i]
+            ,0 // index_row
+            ,0 // index_column
+            ,0 // sum
+            ,1)
         console.log(`Case #${i+1}: ${max}`)
     }
     process.exit(0);
