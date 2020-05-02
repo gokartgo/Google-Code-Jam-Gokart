@@ -32,7 +32,7 @@ rl.on('line', (line) => {
   }
 }).on('close',() => {
     for(let i=0;i<num_test_cases;i++) {
-        answer(move[i],0,1,i+1)
+        answer(i+1)
     }
     process.exit(0);
 });
