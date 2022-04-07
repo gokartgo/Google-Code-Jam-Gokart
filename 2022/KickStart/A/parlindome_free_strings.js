@@ -57,7 +57,7 @@ const answer = (n, data) => {
     for(let j = 0; j < index_convert.length; j++) {
       data_convert[index_convert[index_convert.length - j - 1]] = base2.length > 0 ? base2.pop() : '0'
     }
-    console.log(data_convert)
+    
     isPalindome = false
     for(let j = 0; j < data.length - 4; j++) {
       for(let k = j + 5; k <= data.length; k++) {
