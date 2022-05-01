@@ -27,35 +27,35 @@ let check = 1
 const answer = (n, data) => {
   let answer = [], check = data[0], answer_check = {}
   data.splice(0,1)
+
   while(data.length != 0) { 
     let length = data.length
     for(let i = 0; i < data.length; i++) {
       if(check[0] == data[i][data[i].length - 1] && data[i][0] == data[i][data[i].length - 1]) {
-          check = data[i] + check
-          data[i] = ''
+        check = data[i] + check
+        data.splice(i, 1)
+        i--
       } else if(check[check.length - 1] == data[i][0] && data[i][0] == data[i][data[i].length - 1]) {
         check += data[i]
-        data[i] = '' 
+        data.splice(i, 1) 
+        i--
       }
     }
+
     for(let i = 0; i < data.length; i++) {
       if(check[0] == data[i][data[i].length - 1]) {
         check = data[i] + check
-        data[i] = ''
+        data.splice(i, 1) 
+        i--
         break
       } else if(check[check.length - 1] == data[i][0]) {
         check += data[i]
-        data[i] = ''
+        data.splice(i, 1) 
+        i--
         break
       }
     }
-    let new_data = []
-    for(let i = 0; i < data.length; i++) {
-      if(data[i] != '') {
-        new_data.push(data[i])
-      }
-    }
-    data = new_data
+    
     if (length == data.length) {
       answer.push(check)
       check = data[0]
